@@ -1,12 +1,21 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate
+} from "react-router-dom"
 
 import Login from "./pages/Login"
 import Register from "./pages/Register"
-
+import Dashboard from "./pages/Dashboard"
+import ProtectedRoute from "./components/ProtectedRoute"
+import Expenses from "./pages/Expenses"
 
 function App() {
+
   return (
     <BrowserRouter>
+
       <Routes>
 
         <Route
@@ -24,7 +33,26 @@ function App() {
           element={<Register />}
         />
 
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/expenses"
+          element={
+            <ProtectedRoute>
+              <Expenses />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
+
     </BrowserRouter>
   )
 }

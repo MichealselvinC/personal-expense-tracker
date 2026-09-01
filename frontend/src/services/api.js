@@ -1,53 +1,30 @@
-import axios from "axios";
+import axios from "axios"
 
 
 const API = axios.create({
-    baseURL: "http://127.0.0.1:8000",
-});
+  baseURL: "http://127.0.0.1:8000",
+  headers: {
+    "Content-Type": "application/json",
+  },
+})
 
 
-export const loginUser = async (email, password) => {
-    const response = await API.post("/auth/login", {
-        email,
-        password,
-    });
+API.interceptors.request.use(
+  (config) => {
 
-    return response.data;
-};
+    const token = localStorage.getItem("access_token")
 
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
 
-export const getDashboard = async (token) => {
-    const response = await API.get("/dashboard/summary", {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+    return config
+  },
 
-    return response.data;
-};
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 
-export const createExpense = async (token, expense) => {
-    const response = await API.post(
-        "/expenses/",
-        expense,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
-
-    return response.data;
-};
-
-
-export const getExpenses = async (token) => {
-    const response = await API.get("/expenses/", {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    return response.data;
-};
+export default API
