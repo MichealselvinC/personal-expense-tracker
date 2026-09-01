@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+
 import API from "../services/api"
 import Layout from "../components/Layout"
 import ExpenseCharts from "../components/ExpenseCharts"
@@ -12,6 +14,10 @@ function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
+
+  // ================================
+  // Fetch Dashboard
+  // ================================
 
   const fetchDashboard = async () => {
 
@@ -45,6 +51,10 @@ function Dashboard() {
   }
 
 
+  // ================================
+  // Initial Load
+  // ================================
+
   useEffect(() => {
 
     fetchDashboard()
@@ -52,7 +62,9 @@ function Dashboard() {
   }, [])
 
 
+  // ================================
   // Loading
+  // ================================
 
   if (loading) {
 
@@ -62,15 +74,43 @@ function Dashboard() {
 
         <div className="min-h-[70vh] flex items-center justify-center">
 
-          <div className="text-center">
+          <motion.div
 
-            <div className="w-10 h-10 border-4 border-gray-300 border-t-black rounded-full animate-spin mx-auto"></div>
+            initial={{
+              opacity: 0,
+              scale: 0.9
+            }}
+
+            animate={{
+              opacity: 1,
+              scale: 1
+            }}
+
+            className="
+              glass-strong
+              rounded-3xl
+              px-10
+              py-8
+              text-center
+            "
+          >
+
+            <div className="
+              w-11
+              h-11
+              border-4
+              border-indigo-200
+              border-t-indigo-600
+              rounded-full
+              animate-spin
+              mx-auto
+            " />
 
             <p className="mt-4 text-gray-500">
               Loading dashboard...
             </p>
 
-          </div>
+          </motion.div>
 
         </div>
 
@@ -80,7 +120,9 @@ function Dashboard() {
   }
 
 
+  // ================================
   // Error
+  // ================================
 
   if (error) {
 
@@ -90,9 +132,18 @@ function Dashboard() {
 
         <div className="max-w-7xl mx-auto">
 
-          <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl p-5">
+          <div className="
+            bg-red-500/10
+            backdrop-blur-xl
+            border
+            border-red-300/40
+            text-red-700
+            rounded-2xl
+            p-6
+            shadow-lg
+          ">
 
-            <h2 className="font-semibold text-lg">
+            <h2 className="font-bold text-lg">
               Dashboard Error
             </h2>
 
@@ -100,13 +151,27 @@ function Dashboard() {
               {error}
             </p>
 
+
             <button
               onClick={() => {
+
                 setLoading(true)
                 setError("")
+
                 fetchDashboard()
+
               }}
-              className="mt-4 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800"
+
+              className="
+                mt-5
+                px-5
+                py-2.5
+                rounded-xl
+                bg-gray-900
+                text-white
+                hover:bg-gray-800
+                transition
+              "
             >
               Try Again
             </button>
@@ -125,219 +190,671 @@ function Dashboard() {
 
     <Layout>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto pb-10">
 
 
-        {/* Header */}
+        {/* ================================
+            Header
+        ================================= */}
 
-        <div className="mb-8">
+        <motion.div
 
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          initial={{
+            opacity: 0,
+            y: -20
+          }}
+
+          animate={{
+            opacity: 1,
+            y: 0
+          }}
+
+          transition={{
+            duration: 0.45
+          }}
+
+          className="mb-8"
+        >
+
+          <div className="
+            flex
+            flex-col
+            sm:flex-row
+            sm:items-center
+            sm:justify-between
+            gap-4
+          ">
 
             <div>
 
-              <h1 className="text-3xl font-bold text-gray-900">
+              <p className="
+                text-sm
+                font-medium
+                text-indigo-600
+                mb-1
+              ">
+                Overview
+              </p>
+
+              <h1 className="
+                text-3xl
+                sm:text-4xl
+                font-extrabold
+                text-gray-900
+                tracking-tight
+              ">
                 Dashboard
               </h1>
 
-              <p className="text-gray-500 mt-1">
+              <p className="text-gray-500 mt-2">
                 Here's your expense overview
               </p>
 
             </div>
 
 
-            <button
-              onClick={() => {
-                setLoading(true)
-                fetchDashboard()
+            <motion.button
+
+              whileHover={{
+                y: -2,
+                scale: 1.02
               }}
-              className="self-start px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+
+              whileTap={{
+                scale: 0.97
+              }}
+
+              onClick={() => {
+
+                setLoading(true)
+
+                fetchDashboard()
+
+              }}
+
+              className="
+                self-start
+                glass
+                glass-hover
+                px-5
+                py-2.5
+                rounded-xl
+                text-gray-700
+                font-medium
+                flex
+                items-center
+                gap-2
+              "
             >
-              ↻ Refresh
-            </button>
+
+              <span className="text-lg">
+                ↻
+              </span>
+
+              Refresh
+
+            </motion.button>
 
           </div>
 
-        </div>
+        </motion.div>
 
 
-        {/* Summary Cards */}
+        {/* ================================
+            Summary Cards
+        ================================= */}
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="
+          grid
+          grid-cols-1
+          md:grid-cols-3
+          gap-5
+        ">
 
 
-          {/* Total Expenses */}
+          {/* Total */}
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <motion.div
 
-            <div className="flex items-center justify-between">
+            initial={{
+              opacity: 0,
+              y: 30
+            }}
+
+            animate={{
+              opacity: 1,
+              y: 0
+            }}
+
+            transition={{
+              duration: 0.45,
+              delay: 0.1
+            }}
+
+            whileHover={{
+              y: -6
+            }}
+
+            className="
+              relative
+              overflow-hidden
+              glass-strong
+              rounded-3xl
+              p-6
+              min-h-[170px]
+            "
+          >
+
+            <div className="
+              absolute
+              -top-16
+              -right-16
+              w-40
+              h-40
+              rounded-full
+              bg-indigo-400/20
+              blur-3xl
+            " />
+
+
+            <div className="
+              relative
+              flex
+              items-start
+              justify-between
+            ">
 
               <div>
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 font-medium">
                   Total Expenses
                 </p>
 
-                <h2 className="text-3xl font-bold text-gray-900 mt-2">
-                  ₹{Number(data?.total_expenses || 0).toFixed(2)}
+                <h2 className="
+                  text-3xl
+                  font-extrabold
+                  text-gray-900
+                  mt-3
+                ">
+                  ₹{Number(
+                    data?.total_expenses || 0
+                  ).toFixed(2)}
                 </h2>
+
+                <p className="text-xs text-gray-400 mt-2">
+                  All time spending
+                </p>
 
               </div>
 
 
-              <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-2xl">
+              <div className="
+                w-12
+                h-12
+                rounded-2xl
+                bg-indigo-500/10
+                border
+                border-indigo-300/20
+                backdrop-blur-md
+                flex
+                items-center
+                justify-center
+                text-2xl
+              ">
                 💰
               </div>
 
             </div>
 
-          </div>
+          </motion.div>
 
 
-          {/* Monthly Expenses */}
+          {/* Monthly */}
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <motion.div
 
-            <div className="flex items-center justify-between">
+            initial={{
+              opacity: 0,
+              y: 30
+            }}
+
+            animate={{
+              opacity: 1,
+              y: 0
+            }}
+
+            transition={{
+              duration: 0.45,
+              delay: 0.2
+            }}
+
+            whileHover={{
+              y: -6
+            }}
+
+            className="
+              relative
+              overflow-hidden
+              glass-strong
+              rounded-3xl
+              p-6
+              min-h-[170px]
+            "
+          >
+
+            <div className="
+              absolute
+              -top-16
+              -right-16
+              w-40
+              h-40
+              rounded-full
+              bg-purple-400/20
+              blur-3xl
+            " />
+
+
+            <div className="
+              relative
+              flex
+              items-start
+              justify-between
+            ">
 
               <div>
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 font-medium">
                   This Month
                 </p>
 
-                <h2 className="text-3xl font-bold text-gray-900 mt-2">
-                  ₹{Number(data?.monthly_expenses || 0).toFixed(2)}
+                <h2 className="
+                  text-3xl
+                  font-extrabold
+                  text-gray-900
+                  mt-3
+                ">
+                  ₹{Number(
+                    data?.monthly_expenses || 0
+                  ).toFixed(2)}
                 </h2>
+
+                <p className="text-xs text-gray-400 mt-2">
+                  Current month spending
+                </p>
 
               </div>
 
 
-              <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-2xl">
+              <div className="
+                w-12
+                h-12
+                rounded-2xl
+                bg-purple-500/10
+                border
+                border-purple-300/20
+                backdrop-blur-md
+                flex
+                items-center
+                justify-center
+                text-2xl
+              ">
                 📅
               </div>
 
             </div>
 
-          </div>
+          </motion.div>
 
 
-          {/* Today's Expenses */}
+          {/* Today */}
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+          <motion.div
 
-            <div className="flex items-center justify-between">
+            initial={{
+              opacity: 0,
+              y: 30
+            }}
+
+            animate={{
+              opacity: 1,
+              y: 0
+            }}
+
+            transition={{
+              duration: 0.45,
+              delay: 0.3
+            }}
+
+            whileHover={{
+              y: -6
+            }}
+
+            className="
+              relative
+              overflow-hidden
+              glass-strong
+              rounded-3xl
+              p-6
+              min-h-[170px]
+            "
+          >
+
+            <div className="
+              absolute
+              -top-16
+              -right-16
+              w-40
+              h-40
+              rounded-full
+              bg-emerald-400/20
+              blur-3xl
+            " />
+
+
+            <div className="
+              relative
+              flex
+              items-start
+              justify-between
+            ">
 
               <div>
 
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 font-medium">
                   Today
                 </p>
 
-                <h2 className="text-3xl font-bold text-gray-900 mt-2">
-                  ₹{Number(data?.today_expenses || 0).toFixed(2)}
+                <h2 className="
+                  text-3xl
+                  font-extrabold
+                  text-gray-900
+                  mt-3
+                ">
+                  ₹{Number(
+                    data?.today_expenses || 0
+                  ).toFixed(2)}
                 </h2>
+
+                <p className="text-xs text-gray-400 mt-2">
+                  Today's spending
+                </p>
 
               </div>
 
 
-              <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center text-2xl">
+              <div className="
+                w-12
+                h-12
+                rounded-2xl
+                bg-emerald-500/10
+                border
+                border-emerald-300/20
+                backdrop-blur-md
+                flex
+                items-center
+                justify-center
+                text-2xl
+              ">
                 📌
               </div>
 
             </div>
 
-          </div>
+          </motion.div>
 
         </div>
 
 
-        {/* Charts */}
+        {/* ================================
+            Charts
+        ================================= */}
 
-        <ExpenseCharts
-          categoryData={data?.category_breakdown || []}
-          monthlyData={monthlyData || []}
-        />
+        <motion.div
+
+          initial={{
+            opacity: 0,
+            y: 30
+          }}
+
+          animate={{
+            opacity: 1,
+            y: 0
+          }}
+
+          transition={{
+            duration: 0.5,
+            delay: 0.4
+          }}
+
+          className="mt-7"
+        >
+
+          <ExpenseCharts
+            categoryData={
+              data?.category_breakdown || []
+            }
+
+            monthlyData={
+              monthlyData || []
+            }
+          />
+
+        </motion.div>
 
 
-        {/* Category Breakdown */}
+        {/* ================================
+            Category Breakdown
+        ================================= */}
 
-        <div className="mt-8 bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <motion.div
 
-          <div className="flex items-center justify-between mb-6">
+          initial={{
+            opacity: 0,
+            y: 30
+          }}
 
-            <div>
+          animate={{
+            opacity: 1,
+            y: 0
+          }}
 
-              <h2 className="text-xl font-bold text-gray-900">
-                Category Breakdown
-              </h2>
+          transition={{
+            duration: 0.5,
+            delay: 0.5
+          }}
 
-              <p className="text-sm text-gray-500 mt-1">
-                See where your money is going
-              </p>
+          className="
+            mt-7
+            glass-strong
+            rounded-3xl
+            overflow-hidden
+          "
+        >
 
-            </div>
+          <div className="p-6">
+
+            <p className="
+              text-xs
+              font-semibold
+              uppercase
+              tracking-wider
+              text-indigo-500
+            ">
+              Analytics
+            </p>
+
+            <h2 className="
+              text-xl
+              font-bold
+              text-gray-900
+              mt-1
+            ">
+              Category Breakdown
+            </h2>
+
+            <p className="text-sm text-gray-500 mt-1">
+              See where your money is going
+            </p>
 
           </div>
 
 
           {data?.category_breakdown?.length === 0 ? (
 
-            <div className="py-10 text-center">
-
-              <p className="text-gray-500">
-                No category data available.
-              </p>
-
+            <div className="
+              px-6
+              pb-8
+              text-center
+              text-gray-500
+            ">
+              No category data available.
             </div>
 
           ) : (
 
-            <div className="space-y-4">
+            <div className="px-6 pb-6 space-y-3">
 
-              {data?.category_breakdown?.map((item) => (
+              {data?.category_breakdown?.map(
+                (item, index) => (
 
-                <div
-                  key={item.category}
-                  className="flex items-center justify-between border-b border-gray-100 pb-4 last:border-0 last:pb-0"
-                >
+                  <motion.div
 
-                  <div className="flex items-center gap-3">
+                    key={item.category}
 
-                    <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
-                      📁
+                    initial={{
+                      opacity: 0,
+                      x: -20
+                    }}
+
+                    animate={{
+                      opacity: 1,
+                      x: 0
+                    }}
+
+                    transition={{
+                      delay: 0.1 * index
+                    }}
+
+                    whileHover={{
+                      x: 4
+                    }}
+
+                    className="
+                      flex
+                      items-center
+                      justify-between
+                      p-4
+                      rounded-2xl
+                      bg-white/30
+                      border
+                      border-white/40
+                      hover:bg-white/45
+                      transition
+                    "
+                  >
+
+                    <div className="
+                      flex
+                      items-center
+                      gap-3
+                    ">
+
+                      <div className="
+                        w-10
+                        h-10
+                        rounded-xl
+                        bg-indigo-500/10
+                        border
+                        border-indigo-300/20
+                        flex
+                        items-center
+                        justify-center
+                      ">
+                        📁
+                      </div>
+
+                      <span className="
+                        font-semibold
+                        text-gray-800
+                      ">
+                        {item.category}
+                      </span>
+
                     </div>
 
-                    <span className="font-medium text-gray-800">
-                      {item.category}
+
+                    <span className="
+                      font-bold
+                      text-gray-900
+                    ">
+                      ₹{Number(
+                        item.total || 0
+                      ).toFixed(2)}
                     </span>
 
-                  </div>
+                  </motion.div>
 
-
-                  <span className="font-semibold text-gray-900">
-                    ₹{Number(item.total || 0).toFixed(2)}
-                  </span>
-
-                </div>
-
-              ))}
+                )
+              )}
 
             </div>
 
           )}
 
-        </div>
+        </motion.div>
 
 
-        {/* Recent Expenses */}
+        {/* ================================
+            Recent Expenses
+        ================================= */}
 
-        <div className="mt-8 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <motion.div
 
-          <div className="p-6 border-b border-gray-100">
+          initial={{
+            opacity: 0,
+            y: 30
+          }}
 
-            <h2 className="text-xl font-bold text-gray-900">
+          animate={{
+            opacity: 1,
+            y: 0
+          }}
+
+          transition={{
+            duration: 0.5,
+            delay: 0.6
+          }}
+
+          className="
+            mt-7
+            glass-strong
+            rounded-3xl
+            overflow-hidden
+          "
+        >
+
+          <div className="
+            p-6
+            border-b
+            border-white/40
+          ">
+
+            <p className="
+              text-xs
+              font-semibold
+              uppercase
+              tracking-wider
+              text-indigo-500
+            ">
+              Transactions
+            </p>
+
+            <h2 className="
+              text-xl
+              font-bold
+              text-gray-900
+              mt-1
+            ">
               Recent Expenses
             </h2>
 
@@ -350,15 +867,17 @@ function Dashboard() {
 
           {data?.recent_expenses?.length === 0 ? (
 
-            <div className="p-10 text-center">
+            <div className="
+              p-10
+              text-center
+              text-gray-500
+            ">
 
               <div className="text-4xl mb-3">
                 🧾
               </div>
 
-              <p className="text-gray-500">
-                No recent expenses.
-              </p>
+              No recent expenses.
 
             </div>
 
@@ -368,23 +887,59 @@ function Dashboard() {
 
               <table className="w-full">
 
-                <thead className="bg-gray-50">
+                <thead>
 
-                  <tr>
+                  <tr className="bg-white/20">
 
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                    <th className="
+                      px-6
+                      py-4
+                      text-left
+                      text-xs
+                      uppercase
+                      tracking-wider
+                      font-semibold
+                      text-gray-500
+                    ">
                       Category
                     </th>
 
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                    <th className="
+                      px-6
+                      py-4
+                      text-left
+                      text-xs
+                      uppercase
+                      tracking-wider
+                      font-semibold
+                      text-gray-500
+                    ">
                       Description
                     </th>
 
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-600">
+                    <th className="
+                      px-6
+                      py-4
+                      text-left
+                      text-xs
+                      uppercase
+                      tracking-wider
+                      font-semibold
+                      text-gray-500
+                    ">
                       Date
                     </th>
 
-                    <th className="px-6 py-4 text-right text-sm font-semibold text-gray-600">
+                    <th className="
+                      px-6
+                      py-4
+                      text-right
+                      text-xs
+                      uppercase
+                      tracking-wider
+                      font-semibold
+                      text-gray-500
+                    ">
                       Amount
                     </th>
 
@@ -395,39 +950,87 @@ function Dashboard() {
 
                 <tbody>
 
-                  {data?.recent_expenses?.map((expense) => (
+                  {data?.recent_expenses?.map(
+                    (expense, index) => (
 
-                    <tr
-                      key={expense.id}
-                      className="border-t border-gray-100 hover:bg-gray-50 transition"
-                    >
+                      <motion.tr
 
-                      <td className="px-6 py-4">
+                        key={expense.id}
 
-                        <span className="inline-flex px-3 py-1 bg-gray-100 rounded-full text-sm font-medium">
-                          {expense.category}
-                        </span>
+                        initial={{
+                          opacity: 0
+                        }}
 
-                      </td>
+                        animate={{
+                          opacity: 1
+                        }}
+
+                        transition={{
+                          delay: 0.08 * index
+                        }}
+
+                        className="
+                          border-t
+                          border-white/30
+                          hover:bg-white/30
+                          transition
+                        "
+                      >
+
+                        <td className="px-6 py-4">
+
+                          <span className="
+                            inline-flex
+                            px-3
+                            py-1.5
+                            rounded-full
+                            bg-indigo-500/10
+                            border
+                            border-indigo-300/20
+                            text-sm
+                            font-medium
+                            text-indigo-700
+                          ">
+                            {expense.category}
+                          </span>
+
+                        </td>
 
 
-                      <td className="px-6 py-4 text-gray-600">
-                        {expense.description || "-"}
-                      </td>
+                        <td className="
+                          px-6
+                          py-4
+                          text-gray-600
+                        ">
+                          {expense.description || "-"}
+                        </td>
 
 
-                      <td className="px-6 py-4 text-gray-500">
-                        {expense.expense_date}
-                      </td>
+                        <td className="
+                          px-6
+                          py-4
+                          text-gray-500
+                        ">
+                          {expense.expense_date}
+                        </td>
 
 
-                      <td className="px-6 py-4 text-right font-semibold text-gray-900">
-                        ₹{Number(expense.amount || 0).toFixed(2)}
-                      </td>
+                        <td className="
+                          px-6
+                          py-4
+                          text-right
+                          font-bold
+                          text-gray-900
+                        ">
+                          ₹{Number(
+                            expense.amount || 0
+                          ).toFixed(2)}
+                        </td>
 
-                    </tr>
+                      </motion.tr>
 
-                  ))}
+                    )
+                  )}
 
                 </tbody>
 
@@ -437,7 +1040,7 @@ function Dashboard() {
 
           )}
 
-        </div>
+        </motion.div>
 
 
       </div>

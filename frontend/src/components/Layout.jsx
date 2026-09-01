@@ -11,14 +11,15 @@ function Layout({ children }) {
 
   return (
 
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen">
 
-      {/* Mobile overlay */}
+
+      {/* Mobile Overlay */}
 
       {sidebarOpen && (
 
         <div
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
 
@@ -30,13 +31,17 @@ function Layout({ children }) {
       <div
         className={`
           fixed
+          left-0
+          top-0
+          bottom-0
           z-50
           transition-transform
           duration-300
 
-          ${sidebarOpen
-            ? "translate-x-0"
-            : "-translate-x-full"
+          ${
+            sidebarOpen
+              ? "translate-x-0"
+              : "-translate-x-full"
           }
 
           lg:translate-x-0
@@ -48,7 +53,7 @@ function Layout({ children }) {
       </div>
 
 
-      {/* Main */}
+      {/* Main Content */}
 
       <div className="lg:ml-64">
 
@@ -57,6 +62,7 @@ function Layout({ children }) {
             setSidebarOpen(true)
           }
         />
+
 
         <main className="p-4 sm:p-6 lg:p-8">
 
