@@ -1,5 +1,5 @@
 Frontend
-├── React                         ✅
+├── React                        ✅
 ├── Tailwind CSS                 ✅
 ├── React Router                 ✅
 ├── Axios                        ✅
