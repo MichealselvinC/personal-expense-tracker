@@ -25,6 +25,25 @@ class ExpenseResponse(BaseModel):
         from_attributes = True
 
 
+class IncomeCreate(BaseModel):
+    amount: float = Field(gt=0)
+    source: str = Field(min_length=1, max_length=100)
+    description: str | None = Field(default=None, max_length=255)
+    income_date: date
+
+
+class IncomeResponse(BaseModel):
+    id: int
+    amount: float
+    source: str
+    description: str | None
+    income_date: date
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
 # =========================
 # User Schemas
 # =========================
@@ -56,7 +75,9 @@ class CategorySummary(BaseModel):
 
 
 class DashboardResponse(BaseModel):
+    total_income: float
     total_expenses: float
+    balance: float
     monthly_expenses: float
     today_expenses: float
     category_breakdown: list[CategorySummary]

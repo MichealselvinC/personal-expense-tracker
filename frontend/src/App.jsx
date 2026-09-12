@@ -10,6 +10,7 @@ import Register from "./pages/Register"
 import Dashboard from "./pages/Dashboard"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Expenses from "./pages/Expenses"
+import Income from "./pages/Income"
 
 function App() {
 
@@ -20,7 +21,7 @@ function App() {
 
         <Route
           path="/"
-          element={<Navigate to="/login" replace />}
+          element={<Navigate to="/register" replace />}
         />
 
         <Route
@@ -47,6 +48,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Expenses />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/income"
+          element={
+            <ProtectedRoute>
+              <Income />
             </ProtectedRoute>
           }
         />

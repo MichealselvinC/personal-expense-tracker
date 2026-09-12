@@ -97,6 +97,35 @@ function Sidebar() {
 
         </NavLink>
 
+        <NavLink
+          to="/income"
+          className={({ isActive }) =>
+            `
+            flex items-center gap-3
+            px-4 py-3
+            rounded-xl
+            border
+            transition-all
+            duration-300
+            ${
+              isActive
+                ? "bg-white/15 text-white border-white/20 shadow-lg backdrop-blur-md"
+                : "border-transparent text-gray-400 hover:bg-white/10 hover:text-white"
+            }
+            `
+          }
+        >
+
+          <span className="text-lg">
+            ↗
+          </span>
+
+          <span>
+            Income
+          </span>
+
+        </NavLink>
+
       </nav>
 
 

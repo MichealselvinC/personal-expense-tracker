@@ -1,7 +1,35 @@
-import { Link } from "react-router-dom"
+import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
+
+import API from "../services/api"
 
 
 function Register() {
+
+  const navigate = useNavigate()
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const handleRegister = async (event) => {
+    event.preventDefault()
+    setError("")
+    setLoading(true)
+
+    try {
+      await API.post("/auth/register", { name, email, password })
+      navigate("/login", { state: { registered: true } })
+    } catch (requestError) {
+      setError(
+        requestError.response?.data?.detail || "Unable to create account"
+      )
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
 
@@ -15,8 +43,13 @@ function Register() {
           Start tracking your expenses
         </p>
 
+        {error && (
+          <div className="mt-5 bg-red-100 text-red-700 px-4 py-3 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
 
-        <form className="mt-8 space-y-5">
+        <form onSubmit={handleRegister} className="mt-8 space-y-5">
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -25,7 +58,10 @@ function Register() {
 
             <input
               type="text"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
               placeholder="Enter your name"
+                required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-black"
             />
           </div>
@@ -38,7 +74,10 @@ function Register() {
 
             <input
               type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
               placeholder="Enter your email"
+                required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-black"
             />
           </div>
@@ -51,7 +90,11 @@ function Register() {
 
             <input
               type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
               placeholder="Create a password"
+                minLength={6}
+                required
               className="w-full px-4 py-3 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-black"
             />
           </div>
@@ -59,9 +102,10 @@ function Register() {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition"
           >
-            Create Account
+            {loading ? "Creating account..." : "Create Account"}
           </button>
 
         </form>

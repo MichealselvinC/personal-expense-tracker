@@ -39,3 +39,26 @@ class Expense(Base):
     expense_date = Column(Date, nullable=False)
 
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class Income(Base):
+    __tablename__ = "income"
+
+    id = Column(Integer, primary_key=True, index=True)
+
+    user_id = Column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False,
+        index=True
+    )
+
+    amount = Column(Float, nullable=False)
+
+    source = Column(String(100), nullable=False)
+
+    description = Column(String(255), nullable=True)
+
+    income_date = Column(Date, nullable=False)
+
+    created_at = Column(DateTime, default=datetime.utcnow)

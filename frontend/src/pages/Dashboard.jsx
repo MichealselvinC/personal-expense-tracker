@@ -307,7 +307,8 @@ function Dashboard() {
         <div className="
           grid
           grid-cols-1
-          md:grid-cols-3
+          md:grid-cols-2
+          xl:grid-cols-4
           gap-5
         ">
 
@@ -402,6 +403,80 @@ function Dashboard() {
                 text-2xl
               ">
                 💰
+              </div>
+
+            </div>
+
+          </motion.div>
+
+
+          {/* Income */}
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.15 }}
+            whileHover={{ y: -6 }}
+            className="relative overflow-hidden glass-strong rounded-3xl p-6 min-h-[170px]"
+          >
+
+            <div className="relative flex items-start justify-between">
+
+              <div>
+                <p className="text-sm text-gray-500 font-medium">
+                  Total Income
+                </p>
+
+                <h2 className="text-3xl font-extrabold text-emerald-700 mt-3">
+                  ₹{Number(data?.total_income || 0).toFixed(2)}
+                </h2>
+
+                <p className="text-xs text-gray-400 mt-2">
+                  All time income
+                </p>
+              </div>
+
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-300/20 flex items-center justify-center text-2xl">
+                ↗
+              </div>
+
+            </div>
+
+          </motion.div>
+
+
+          {/* Balance */}
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.2 }}
+            whileHover={{ y: -6 }}
+            className="relative overflow-hidden glass-strong rounded-3xl p-6 min-h-[170px]"
+          >
+
+            <div className="relative flex items-start justify-between">
+
+              <div>
+                <p className="text-sm text-gray-500 font-medium">
+                  Balance
+                </p>
+
+                <h2 className={`text-3xl font-extrabold mt-3 ${
+                  Number(data?.balance || 0) >= 0
+                    ? "text-emerald-700"
+                    : "text-red-600"
+                }`}>
+                  ₹{Number(data?.balance || 0).toFixed(2)}
+                </h2>
+
+                <p className="text-xs text-gray-400 mt-2">
+                  Income minus expenses
+                </p>
+              </div>
+
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-300/20 flex items-center justify-center text-2xl">
+                =
               </div>
 
             </div>

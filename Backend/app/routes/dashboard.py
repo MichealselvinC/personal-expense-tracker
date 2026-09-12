@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 
 from ..database import get_db
 from ..dependencies import get_current_user
-from ..models import Expense, User
+from ..models import Expense, Income, User
 from ..schemas import DashboardResponse
 
 
@@ -21,6 +21,12 @@ def get_dashboard_summary(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
+    total_income = (
+        db.query(func.coalesce(func.sum(Income.amount), 0))
+        .filter(Income.user_id == current_user.id)
+        .scalar()
+    )
+
     # Total expenses
     total_expenses = (
         db.query(func.coalesce(func.sum(Expense.amount), 0))
@@ -81,7 +87,9 @@ def get_dashboard_summary(
     )
 
     return {
+        "total_income": float(total_income),
         "total_expenses": float(total_expenses),
+        "balance": float(total_income - total_expenses),
         "monthly_expenses": float(monthly_expenses),
         "today_expenses": float(today_expenses),
         "category_breakdown": category_breakdown,
