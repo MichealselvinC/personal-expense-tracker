@@ -43,3 +43,6 @@ To delete and recreate only the `expenses` table in the database selected by `DA
 ```
 
 This permanently deletes expense rows and leaves `users` and `income` unchanged.
+
+
+## develop by michael selvin
