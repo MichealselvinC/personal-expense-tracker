@@ -1,5 +1,5 @@
 Frontend
-├── React                         ✅
+├── React                        ✅
 ├── Tailwind CSS                 ✅
 ├── React Router                 ✅
 ├── Axios                        ✅
@@ -19,6 +19,7 @@ Backend
 ├── Expense CRUD API             ✅
 ├── Dashboard Summary API        ✅
 └── Monthly Analytics API        ✅
+<<<<<<< HEAD
 
 
 
@@ -70,3 +71,5 @@ This permanently deletes expense rows and leaves `users` and `income` unchanged.
 
 
 ## develop by michael selvin
+=======
+>>>>>>> bad2e02cd811a8f15e2191620f96d52bb5c8ef6a
